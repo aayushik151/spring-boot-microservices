@@ -8,7 +8,7 @@ phases:
   pre_build:
     commands:
 #      - docker-compose up -d
-      - docker-compose -f ./docker-compose.yml up
+      - docker-compose -f ././product-service/docker-compose.yml up
       - mvn clean install
       - echo Logging in to Amazon ECR...
       - aws --version
