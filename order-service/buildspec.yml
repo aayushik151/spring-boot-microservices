@@ -3,6 +3,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - docker compose up
       - mvn clean install
       - echo Logging in to Amazon ECR...
       - aws --version
