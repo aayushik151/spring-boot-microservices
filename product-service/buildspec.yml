@@ -1,14 +1,17 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
-      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+#  install:
+#    commands:
+#      - /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+#      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
   pre_build:
     commands:
 #      - docker-compose up -d
       - docker-compose -f ././product-service/docker-compose.yml up
+      - echo "MongoDB is up and running"
+#      - docker pull mongodb/mongodb-community-server:latest
+#      - docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
       - mvn clean install
       - echo Logging in to Amazon ECR...
       - aws --version
@@ -17,6 +20,8 @@ phases:
       - aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin $REPOSITORY_URI
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+    finally:
+      - echo This always runs even if the install command fails
   build:
     commands:
       - echo Build started on `date`
