@@ -23,11 +23,11 @@ services:
       - ./mysql:/var/lib/mysql
       - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  app:
-    build: .
-    container_name: spring-boot-app
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongodb:27017/product-service?authSource=admin
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/order_service?createDatabaseIfNotExist=true
+#  app:
+#    build: .
+#    container_name: spring-boot-app
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongodb:27017/product-service?authSource=admin
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/order_service?createDatabaseIfNotExist=true
