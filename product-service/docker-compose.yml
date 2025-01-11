@@ -1,4 +1,4 @@
-version: '4'
+version: '3.8'
 services:
   mongodb:
     image: mongo:7.0.5
@@ -12,3 +12,11 @@ services:
     volumes:
       - ./data:/data/db
 #      - mongo-data:/data/db
+
+  app:
+    build: .
+    container_name: spring-boot-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongodb:27017/product-service?authSource=admin
