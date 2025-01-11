@@ -4,7 +4,9 @@ phases:
   install:
     commands:
       - docker-compose -f ././product-service/docker-compose.yml up
-      - echo "MongoDB is up and running"
+      - echo Waiting for MongoDB to be ready...
+      - ./wait-for-it.sh mongodb:27017 --timeout=60 --strict -- echo "MongoDB is up and running"
+#      - echo "MongoDB is up and running"
 #      - /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
 #      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
     finally:
