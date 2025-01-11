@@ -5,7 +5,7 @@ FROM openjdk:21
 WORKDIR /app
 
 # Copy the JAR file into the container
-COPY ./target/product-service-1.0-SNAPSHOT.jar /app
+COPY target/product-service-1.0-SNAPSHOT.jar /app
 
 # Expose the port that the application will run on
 EXPOSE 8080
