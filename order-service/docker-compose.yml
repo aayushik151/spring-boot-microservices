@@ -22,3 +22,5 @@ services:
       - mysql
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/order_service?createDatabaseIfNotExist=true
+
+#order-service: image: your-order-service-image container_name: order-service environment: SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/yourdatabase SPRING_DATASOURCE_USERNAME: yourusername SPRING_DATASOURCE_PASSWORD: yourpassword depends_on: - mysql ports: - "8080:8080" networks: - my-network networks: my-network:
