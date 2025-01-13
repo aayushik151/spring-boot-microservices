@@ -3,6 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
+      - cd product-service
       - echo Starting Docker daemon...
       - /usr/local/bin/dockerd-entrypoint.sh &  # Start Docker daemon
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
@@ -10,11 +11,11 @@ phases:
   pre_build:
     commands:
       - echo Starting MongoDB container...
-      - docker-compose -f ./docker-compose.yml up -d mongodb mysql
-      - echo Waiting for MongoDB and MySQL to be ready...
+      - docker-compose -f ../product-service/docker-compose.yml up -d mongodb
+      - echo Waiting for MongoDB to be ready...
 #      - wait-for-it.sh localhost:27017 --timeout=60 --strict -- echo "MongoDB is up and running"
       - echo Building the Maven project...
-      - mvn clean install
+      - mvn clean install -pl product-service -am
       - echo Logging in to Amazon ECR...
       - REPOSITORY_URI=975050119767.dkr.ecr.ap-southeast-2.amazonaws.com/programming-registry
       - aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin $REPOSITORY_URI
@@ -42,4 +43,4 @@ phases:
 artifacts:
   files:
     - imagedefinitions.json
-    - target/product-service-1.0-SNAPSHOT.jar
+    - product-service/target/product-service-1.0-SNAPSHOT.jar

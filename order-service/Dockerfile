@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/order-service-1.0-SNAPSHOT.jar /app
 
 # Expose the port that the application will run on
-EXPOSE 8080
+EXPOSE 8081
 
 # Run the JAR file
 CMD ["java", "-jar", "order-service-1.0-SNAPSHOT.jar"]

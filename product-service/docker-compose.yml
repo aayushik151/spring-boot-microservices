@@ -11,12 +11,15 @@ services:
       MONGO_INITDB_DATABASE: product-service
     volumes:
       - ./data:/data/db
-#      - mongo-data:/data/db
 
   app:
-    build: .
-    container_name: spring-boot-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: product-service-app
     ports:
       - "8080:8080"
+    depends_on:
+      - mongodb
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://root:password@mongodb:27017/product-service?authSource=admin

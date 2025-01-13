@@ -1,4 +1,4 @@
-version: "4"
+version: "3.8"
 services:
   mysql:
     image: mysql:8.3.0
@@ -10,3 +10,15 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
       - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: order-service-app
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/order_service?createDatabaseIfNotExist=true
