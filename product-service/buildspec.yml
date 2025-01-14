@@ -11,8 +11,8 @@ phases:
   pre_build:
     commands:
       - echo Starting MongoDB container...
-#      - docker-compose -f ../product-service/docker-compose.yml up -d mongodb
-      - docker-compose -f ../product-service/docker-compose.yml up
+      - docker-compose -f ../product-service/docker-compose.yml up -d mongodb
+#      - docker-compose -f ../product-service/docker-compose.yml up
       - echo Waiting for MongoDB to be ready...
 #      - wait-for-it.sh localhost:27017 --timeout=60 --strict -- echo "MongoDB is up and running"
       - echo Building the Maven project...
